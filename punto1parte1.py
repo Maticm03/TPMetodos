@@ -39,7 +39,7 @@ def show_images_and_reconstructions(images, reconstructions_first, reconstructio
         ax.imshow(reconstructions_first[i].reshape(28, 28), cmap='gray')
         ax.set_title(f'Imagen {i}')
         ax.axis('off')
-    plt.suptitle('Reconstrucciones con Primeras Dimensiones')
+    plt.suptitle('Reconstrucciones con las primeras 15 dimensiones')
     plt.show()
 
     fig, axes = plt.subplots(4, 4, figsize=(10, 10))
@@ -48,21 +48,21 @@ def show_images_and_reconstructions(images, reconstructions_first, reconstructio
         ax.imshow(reconstructions_last[i].reshape(28, 28), cmap='gray')
         ax.set_title(f'Imagen {i}')
         ax.axis('off')
-    plt.suptitle('Reconstrucciones con Últimas Dimensiones')
+    plt.suptitle('Reconstrucciones con las últimas 15 dimensiones')
     plt.show()
 
 # Main
 image_vectors = load_and_convert_images()
 U, s, Vt = apply_svd(image_vectors)
-k_first = 5  # Puedes ajustar este valor para las primeras dimensiones
-k_last = 5 # Puedes ajustar este valor para las últimas dimensiones
+k_first = 15  # Puedes ajustar este valor para las primeras dimensiones
+k_last = 15 # Puedes ajustar este valor para las últimas dimensiones
 reconstructions_first = compress_and_reconstruct_images(U, s, Vt, k_first)
 reconstructions_last = compress_and_reconstruct_images(U, s, Vt, -k_last)  # Usar el negativo para seleccionar las últimas dimensiones
 
 show_images_and_reconstructions(image_vectors, reconstructions_first, reconstructions_last)
 
 # Calcular la similaridad entre pares de imágenes para diferentes valores de d y almacenar los resultados
-d_values = [1, 5, 10, 16, 20]  # Valores de d a considerar
+d_values = [1, 4, 10, 16, 100]  # Valores de d a considerar
 similarity_values = []  # Almacenar las similaridades para cada valor de d
 
 for d in d_values:
